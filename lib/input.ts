@@ -1,9 +1,6 @@
 import { createTempDir, TempDir, Tree } from 'broccoli-test-helper';
-import { symlink as _symlink } from 'fs';
+import { symlinkSync } from 'fs';
 import { join } from 'path';
-import { promisify } from 'util';
-
-const symlink = promisify(_symlink);
 
 interface Options { as?: string; }
 
@@ -40,8 +37,9 @@ export default class Input {
     if (!options.as) {
       throw new Error('You must provide an `as` option to `installDependecies`.');
     }
-    await this.symlink(addonPath, options.as);
-    await this.symlink(join(addonPath, 'node_modules'), 'node_modules');
+
+    this.symlinkSync(addonPath, options.as);
+    this.symlinkSync(join(addonPath, 'node_modules'), 'node_modules');
   }
 
   public path() {
@@ -52,8 +50,8 @@ export default class Input {
     return this.wrappedInput.read();
   }
 
-  public async symlink(target: string, path: string) {
-    await symlink(target, join(this.wrappedInput.path(), path));
+  public symlinkSync(target: string, path: string) {
+    symlinkSync(target, join(this.wrappedInput.path(), path));
   }
 
   public write(tree: Tree, to?: string) {
