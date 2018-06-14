@@ -33,7 +33,7 @@ export default class Input {
    * @param addonPath - absolute path to the root directory of the project
    * @param options.as - name of the addon directory
    */
-  public async installDependencies(addonPath: string, options: Options) {
+  public installDependencies(addonPath: string, options: Options) {
     if (!options.as) {
       throw new Error('You must provide an `as` option to `installDependecies`.');
     }
