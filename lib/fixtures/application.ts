@@ -34,11 +34,11 @@ export default class Application extends AbstractFixture {
 
   /**
    * Adds an addon to the application's package.json config for discovery. Use
-   * this in tandem with `Input#installDependencies` to link the a working copy
-   * of an addon to the Ember CLI build.
-   * @param name name of the addon
+   * this in tandem with the `as` option of `Input#installDependencies` to link
+   * the addon under test in the Ember CLI build.
+   * @param name name of the addon directory
    */
-  public siblingAddon(name: string) {
+  public inRepoAddon(name: string) {
     this.packageJSON((rendered: any) => {
       const emberAddon = rendered['ember-addon'] || {};
       const paths = emberAddon.paths || [];
