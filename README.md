@@ -55,7 +55,7 @@ After calling `output.build()`, you can inspect the results with the same
 Usage Examples
 ------------------------------------------------------------------------------
 
-See [test/acceptance.test.ts][test/acceptance.test.ts] for an example usage.
+See [test/acceptance.test.ts](test/acceptance.test.ts) for an example usage.
 
 
 Contributing
