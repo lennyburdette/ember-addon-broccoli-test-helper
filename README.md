@@ -66,7 +66,7 @@ describe('my-addon', function() {
   it('builds everything', async () => {
     const app = new ApplicationFixture()
       .file('app/templates/application.hbs', '<h1>Hello World</h1>')
-      .siblingAddon('addon-under-test')
+      .inRepoAddon('addon-under-test')
       .build();
 
     const applicationFixture = new FixtureBuilder()
