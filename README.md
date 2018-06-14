@@ -55,46 +55,7 @@ After calling `output.build()`, you can inspect the results with the same
 Usage Examples
 ------------------------------------------------------------------------------
 
-```js
-import { expect } from 'chai';
-import { resolve } from 'path';
-import { ApplicationFixture, createBuilder, createTempDir, FixtureBuilder } from '../index';
-
-describe('my-addon', function() {
-  this.timeout(6000);
-
-  it('builds everything', async () => {
-    const app = new ApplicationFixture()
-      .file('app/templates/application.hbs', '<h1>Hello World</h1>')
-      .inRepoAddon('addon-under-test')
-      .build();
-
-    const applicationFixture = new FixtureBuilder()
-      .application(app)
-      .build();
-
-    const input = await createTempDir();
-
-    const output = createBuilder(input.path());
-
-    try {
-      await input.installDependencies(
-        resolve(__dirname, '../..'),
-        { as: 'addon-under-test' }
-      );
-      input.write(applicationFixture);
-
-      await output.build();
-
-      const files = output.read();
-      expect(files.assets['application.js']).to.include('Hello World');
-    } catch {
-      input.dispose();
-      output.dispose();
-    }
-  });
-});
-```
+See [test/acceptance.test.ts][test/acceptance.test.ts] for an example usage.
 
 
 Contributing
