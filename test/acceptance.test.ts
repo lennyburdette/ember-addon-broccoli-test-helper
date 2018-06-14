@@ -5,6 +5,16 @@ import { ApplicationFixture, createBuilder, createTempDir, FixtureBuilder } from
 describe('my-addon', function() {
   this.timeout(6000);
 
+  let input: any;
+  let output: any;
+
+  afterEach(() => {
+    if (input)  { input.dispose(); }
+    if (output) { output.dispose(); }
+
+    input = output = null;
+  });
+
   it('builds everything', async () => {
     const app = new ApplicationFixture()
       .file('app/templates/application.hbs', '<h1>Hello World</h1>')
@@ -15,32 +25,29 @@ describe('my-addon', function() {
       .application(app)
       .build();
 
-    const input = await createTempDir();
+    input = await createTempDir();
+    output = createBuilder(input.path());
 
-    const output = createBuilder(input.path());
+    await input.installDependencies(
+      resolve(__dirname, '../..'),
+      { as: 'addon-under-test' }
+    );
 
-    try {
-      await input.installDependencies(
-        resolve(__dirname, '../..'),
-        { as: 'addon-under-test' }
-      );
-      input.write(applicationFixture);
+    input.write(applicationFixture);
 
-      await output.build();
+    await output.build();
 
-      const files = output.read();
-      expect(Object.keys(files.assets)).to.deep.equal([
-        'application.css',
-        'application.js',
-        'application.map',
-        'vendor.css',
-        'vendor.js',
-        'vendor.map'
-      ]);
-      expect(files.assets['application.js']).to.include('Hello World');
-    } catch {
-      input.dispose();
-      output.dispose();
-    }
+    const files = output.read();
+
+    expect(Object.keys(files.assets)).to.deep.equal([
+      'application.css',
+      'application.js',
+      'application.map',
+      'vendor.css',
+      'vendor.js',
+      'vendor.map'
+    ]);
+
+    expect(files.assets['application.js']).to.include('Hello World');
   });
 });
