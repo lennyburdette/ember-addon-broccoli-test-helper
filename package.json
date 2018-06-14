@@ -17,7 +17,8 @@
     "lint": "tslint -p tsconfig.json",
     "prepublish": "tsc",
     "pretest": "tsc",
-    "test": "mocha dist/test/"
+    "test": "mocha dist/test/",
+    "test:debug": "tsc && mocha debug dist/test/"
   },
   "dependencies": {
     "broccoli-test-helper": "^1.2.0",
