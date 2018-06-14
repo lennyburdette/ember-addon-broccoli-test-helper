@@ -28,7 +28,7 @@ describe('my-addon', function() {
     input = await createTempDir();
     output = createBuilder(input.path());
 
-    await input.installDependencies(
+    input.installDependencies(
       resolve(__dirname, '../..'),
       { as: 'addon-under-test' }
     );
