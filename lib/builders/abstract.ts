@@ -1,11 +1,17 @@
-import { defaultsDeep } from "lodash";
+import { defaultsDeep } from 'lodash';
+import { FileMap } from '../builder';
+
+type PackageJSON = object;
+// PackageJSONParts are merged together to form the full PackageJSON object
+type PackageJSONPart = object;
+type PackageJSONEditor = (object: PackageJSON) => PackageJSONPart;
 
 export default class AbstractBuilder {
   public name: string;
 
-  public files: Map<string, string> = new Map();
+  public files: FileMap = new Map();
 
-  public packageJSONObjects: object[] = [];
+  public packageJSONParts: PackageJSONPart[] = [];
 
   constructor(name: string) {
     this.name = name;
@@ -16,18 +22,18 @@ export default class AbstractBuilder {
     return this;
   }
 
-  public packageJSON(arg: ((object: any) => object) | any): this {
-    if (typeof arg === "function") {
+  public packageJSON(arg: PackageJSONEditor | PackageJSONPart): this {
+    if (typeof arg === 'function') {
       const rendered = this._renderPackageJSON();
       this.packageJSON(arg(rendered));
     } else {
-      this.packageJSONObjects.push(arg);
+      this.packageJSONParts.push(arg);
     }
 
     return this;
   }
 
-  public build(): Map<string, string> {
+  public build(): FileMap {
     const files = new Map<string, string>();
 
     for (const [filename, contents] of this.files) {
@@ -41,9 +47,7 @@ export default class AbstractBuilder {
     return files;
   }
 
-  private _renderPackageJSON(): object {
-    return this.packageJSONObjects.reduce((acc, next) =>
-      defaultsDeep(acc, next)
-    );
+  private _renderPackageJSON(): PackageJSON {
+    return this.packageJSONParts.reduce((acc, next) => defaultsDeep(acc, next));
   }
 }

@@ -16,9 +16,7 @@ export default class Output {
 
   constructor(path: string, options?: Options) {
     this.path = path;
-    this.options = Object.assign({
-      workingDir: "application"
-    }, options);
+    this.options = { workingDir: 'application', ...options };
   }
 
   get builder(): _Output {
