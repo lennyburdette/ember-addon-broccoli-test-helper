@@ -11,12 +11,12 @@ export default class AbstractFixture {
     this.name = name;
   }
 
-  public file(name: string, contents: string) {
+  public file(name: string, contents: string): this {
     this.files.set(name, contents);
     return this;
   }
 
-  public packageJSON(arg: ((object: any) => object) | any) {
+  public packageJSON(arg: ((object: any) => object) | any): this {
     if (typeof arg === "function") {
       const rendered = this._renderPackageJSON();
       this.packageJSON(arg(rendered));
@@ -27,13 +27,7 @@ export default class AbstractFixture {
     return this;
   }
 
-  public _renderPackageJSON() {
-    return this.packageJSONObjects.reduce((acc, next) =>
-      defaultsDeep(acc, next)
-    );
-  }
-
-  public build() {
+  public build(): Map<string, string> {
     const files = new Map<string, string>();
 
     for (const [filename, contents] of this.files) {
@@ -45,5 +39,11 @@ export default class AbstractFixture {
     files.set(`${this.name}/package.json`, JSON.stringify(packageJSON));
 
     return files;
+  }
+
+  private _renderPackageJSON(): object {
+    return this.packageJSONObjects.reduce((acc, next) =>
+      defaultsDeep(acc, next)
+    );
   }
 }

@@ -6,7 +6,7 @@ export default class Addon extends AbstractFixture {
     this.applyDefaults();
   }
 
-  public applyDefaults() {
+  public applyDefaults(): void {
     this.file(
       "config/environment.js",
       `module.exports = function() {

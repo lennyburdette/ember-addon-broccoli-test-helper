@@ -1,4 +1,4 @@
-function writeFile(filename: string, contents: string, receiver: object) {
+function writeFile(filename: string, contents: string, receiver: object): void {
   const pathParts = filename.split("/");
   const directories = pathParts.length > 1 ? pathParts.slice(0, -1) : [];
   const file = pathParts.slice(-1)[0];
@@ -15,7 +15,7 @@ function writeFile(filename: string, contents: string, receiver: object) {
 export default class Builder {
   public files: Map<string, string> = new Map();
 
-  public application(app: Map<string, string>) {
+  public application(app: Map<string, string>): this {
     for (const [filename, contents] of app) {
       this.files.set(filename, contents);
     }
@@ -23,7 +23,7 @@ export default class Builder {
     return this;
   }
 
-  public addon(addon: Map<string, string>) {
+  public addon(addon: Map<string, string>): this {
     for (const [filename, contents] of addon) {
       this.files.set(filename, contents);
     }
@@ -31,12 +31,12 @@ export default class Builder {
     return this;
   }
 
-  public file(name: string, contents: string) {
+  public file(name: string, contents: string): this {
     this.files.set(name, contents);
     return this;
   }
 
-  public build() {
+  public build(): object {
     const result = {};
 
     for (const [name, contents] of this.files) {

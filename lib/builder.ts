@@ -1,4 +1,4 @@
-import { createBuilder } from "broccoli-test-helper";
+import { Changes, createBuilder, Output, Tree } from "broccoli-test-helper";
 import { join } from "path";
 
 // PRIVATE API ACCESS
@@ -12,10 +12,7 @@ export default class Builder {
 
   public options: Options;
 
-  /**
-   * @private
-   */
-  public wrappedBuilder: any;
+  private wrappedBuilder!: Output;
 
   constructor(path: string, options?: Options) {
     this.path = path;
@@ -24,7 +21,7 @@ export default class Builder {
     }, options);
   }
 
-  get builder() {
+  get builder(): Output {
     if (this.wrappedBuilder) {
       return this.wrappedBuilder;
     }
@@ -43,7 +40,7 @@ export default class Builder {
     return this.wrappedBuilder;
   }
 
-  public build() {
+  public build(): Promise<void> {
     try {
       return this.builder.build();
     } finally {
@@ -51,15 +48,15 @@ export default class Builder {
     }
   }
 
-  public changes() {
+  public changes(): Changes {
     return this.builder.changes();
   }
 
-  public dispose() {
+  public dispose(): Promise<void> {
     return this.builder.dispose();
   }
 
-  public read() {
-    return this.builder.read();
+  public read(from?: string): Tree {
+    return this.builder.read(from);
   }
 }

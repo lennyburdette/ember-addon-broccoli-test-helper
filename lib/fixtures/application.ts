@@ -6,7 +6,7 @@ export default class Application extends AbstractFixture {
     this.applyDefaults();
   }
 
-  public applyDefaults() {
+  public applyDefaults(): void {
     this.file("app/styles/app.css", "");
     this.file(
       "config/environment.js",
@@ -40,7 +40,7 @@ export default class Application extends AbstractFixture {
    * the addon under test in the Ember CLI build.
    * @param name name of the addon directory
    */
-  public inRepoAddon(name: string) {
+  public inRepoAddon(name: string): this {
     this.packageJSON((rendered: any) => {
       const emberAddon = rendered["ember-addon"] || {};
       const paths = emberAddon.paths || [];
