@@ -1,13 +1,14 @@
-import { expect } from "chai";
-import { resolve } from "path";
+import { expect } from 'chai';
+import { resolve } from 'path';
 import {
+  AddonBuilder,
   ApplicationBuilder,
   createBuilder,
   createTempDir,
   FixtureBuilder
-} from "../index";
+} from '../index';
 
-describe("my-addon", function() {
+describe('basic functionality', function() {
   this.timeout(6000);
 
   let input: any;
@@ -24,19 +25,27 @@ describe("my-addon", function() {
     input = output = null;
   });
 
-  it("builds everything", async () => {
-    const app = new ApplicationBuilder()
-      .file("app/templates/application.hbs", "<h1>Hello World</h1>")
-      .inRepoAddon("addon-under-test")
+  it('builds everything', async () => {
+    const addon = new AddonBuilder('test-addon')
+      .file('addon/styles/addon.css', '.from-addon { background: red; }')
       .build();
 
-    const applicationFixture = new FixtureBuilder().application(app).build();
+    const app = new ApplicationBuilder()
+      .file('app/templates/application.hbs', '<h1>Hello World</h1>')
+      .inRepoAddon('addon-under-test')
+      .inRepoAddon('test-addon')
+      .build();
+
+    const applicationFixture = new FixtureBuilder()
+      .application(app)
+      .addon(addon)
+      .build();
 
     input = await createTempDir();
     output = createBuilder(input.path());
 
-    input.installDependencies(resolve(__dirname, "../.."), {
-      as: "addon-under-test"
+    input.installDependencies(resolve(__dirname, '../..'), {
+      as: 'addon-under-test'
     });
 
     input.write(applicationFixture);
@@ -46,14 +55,15 @@ describe("my-addon", function() {
     const files = output.read();
 
     expect(Object.keys(files.assets)).to.deep.equal([
-      "application.css",
-      "application.js",
-      "application.map",
-      "vendor.css",
-      "vendor.js",
-      "vendor.map"
+      'application.css',
+      'application.js',
+      'application.map',
+      'vendor.css',
+      'vendor.js',
+      'vendor.map'
     ]);
 
-    expect(files.assets["application.js"]).to.include("Hello World");
+    expect(files.assets['application.js']).to.include('Hello World');
+    expect(files.assets['vendor.css']).to.include('.from-addon');
   });
 });

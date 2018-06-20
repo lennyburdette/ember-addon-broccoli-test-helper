@@ -21,9 +21,6 @@ export default class AddonBuidler extends AbstractBuilder {
         "ember-cli-babel": "*",
         "ember-cli-htmlbars": "*"
       },
-      devDependencies: {
-        "ember-engines": "*"
-      },
       keywords: ["ember-addon"],
       name: this.name
     });
