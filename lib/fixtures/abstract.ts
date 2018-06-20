@@ -1,4 +1,4 @@
-import { defaultsDeep } from 'lodash';
+import { defaultsDeep } from "lodash";
 
 export default class AbstractFixture {
   public name: string;
@@ -12,8 +12,8 @@ export default class AbstractFixture {
     return this;
   }
 
-  public packageJSON(arg: ((object: any) => object)|any) {
-    if (typeof arg === 'function') {
+  public packageJSON(arg: ((object: any) => object) | any) {
+    if (typeof arg === "function") {
       const rendered = this._renderPackageJSON();
       this.packageJSON(arg(rendered));
     } else {
@@ -24,7 +24,9 @@ export default class AbstractFixture {
   }
 
   public _renderPackageJSON() {
-    return this.packageJSONObjects.reduce((acc, next) => defaultsDeep(acc, next));
+    return this.packageJSONObjects.reduce((acc, next) =>
+      defaultsDeep(acc, next)
+    );
   }
 
   public build() {

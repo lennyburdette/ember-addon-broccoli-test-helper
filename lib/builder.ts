@@ -1,9 +1,9 @@
-import { createBuilder } from 'broccoli-test-helper';
-import { join } from 'path';
+import { createBuilder } from "broccoli-test-helper";
+import { join } from "path";
 
 // PRIVATE API ACCESS
-const EmberApp: any = require('ember-cli/lib/broccoli/ember-app');
-const _resetTreeCache: any = require('ember-cli/lib/models/addon')._resetTreeCache;
+const EmberApp: any = require("ember-cli/lib/broccoli/ember-app");
+const _resetTreeCache: any = require("ember-cli/lib/models/addon")._resetTreeCache;
 
 export interface Options { workingDir: string; }
 
@@ -20,7 +20,7 @@ export default class Builder {
   constructor(path: string, options?: Options) {
     this.path = path;
     this.options = Object.assign({
-      workingDir: 'application'
+      workingDir: "application"
     }, options);
   }
 

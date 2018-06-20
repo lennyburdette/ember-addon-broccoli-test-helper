@@ -1,13 +1,13 @@
 {
-  "extends": "tslint:recommended",
+  "extends": [
+    "tslint:recommended",
+    "prettier",
+    "tslint-config-prettier"
+  ],
   "rules": {
     "prefer-for-of": false,
     "no-var-requires": false,
-    "interface-name": [ false ],
-    "quotemark": [true, "single"],
-    "trailing-comma": [
-      false
-    ],
-    "object-literal-key-quotes": [true, "as-needed"]
+    "interface-name": false,
+    "trailing-comma": false
   }
 }

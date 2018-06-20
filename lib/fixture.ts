@@ -1,5 +1,5 @@
 function writeFile(filename: string, contents: string, receiver: object) {
-  const pathParts = filename.split('/');
+  const pathParts = filename.split("/");
   const directories = pathParts.length > 1 ? pathParts.slice(0, -1) : [];
   const file = pathParts.slice(-1)[0];
 

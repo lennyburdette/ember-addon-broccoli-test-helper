@@ -1,8 +1,10 @@
-import { createTempDir, TempDir, Tree } from 'broccoli-test-helper';
-import { symlinkSync } from 'fs';
-import { join } from 'path';
+import { createTempDir, TempDir, Tree } from "broccoli-test-helper";
+import { symlinkSync } from "fs";
+import { join } from "path";
 
-interface Options { as?: string; }
+interface Options {
+  as?: string;
+}
 
 export default class Input {
   public static async create() {
@@ -35,11 +37,13 @@ export default class Input {
    */
   public installDependencies(addonPath: string, options: Options) {
     if (!options.as) {
-      throw new Error('You must provide an `as` option to `installDependecies`.');
+      throw new Error(
+        "You must provide an `as` option to `installDependecies`."
+      );
     }
 
     this.symlinkSync(addonPath, options.as);
-    this.symlinkSync(join(addonPath, 'node_modules'), 'node_modules');
+    this.symlinkSync(join(addonPath, "node_modules"), "node_modules");
   }
 
   public path() {

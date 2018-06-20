@@ -1,34 +1,37 @@
-import AbstractFixture from './abstract';
+import AbstractFixture from "./abstract";
 
 export default class Application extends AbstractFixture {
-  constructor(name = 'application') {
+  constructor(name = "application") {
     super();
     this.name = name;
     this.applyDefaults();
   }
 
   public applyDefaults() {
-    this.file('app/styles/app.css', '');
-    this.file('config/environment.js', `module.exports = function() {
+    this.file("app/styles/app.css", "");
+    this.file(
+      "config/environment.js",
+      `module.exports = function() {
   return { modulePrefix: "${this.name}" };
 };
-`);
-    this.file('app/index.html', '');
-    this.file('ember-cli-build.js', 'module.exports = {};');
+`
+    );
+    this.file("app/index.html", "");
+    this.file("ember-cli-build.js", "module.exports = {};");
 
     this.packageJSON({
-      devDependencies: {
-        'ember-cli': '*',
-        'ember-cli-babel': '*',
-        'ember-cli-htmlbars': '*',
-        'ember-engines': '*',
-        'ember-source': '*',
-        'loader.js': '*'
+      "devDependencies": {
+        "ember-cli": "*",
+        "ember-cli-babel": "*",
+        "ember-cli-htmlbars": "*",
+        "ember-engines": "*",
+        "ember-source": "*",
+        "loader.js": "*"
       },
-      'ember-addon': {
+      "ember-addon": {
         paths: []
       },
-      name: this.name
+      "name": this.name
     });
   }
 
@@ -40,7 +43,7 @@ export default class Application extends AbstractFixture {
    */
   public inRepoAddon(name: string) {
     this.packageJSON((rendered: any) => {
-      const emberAddon = rendered['ember-addon'] || {};
+      const emberAddon = rendered["ember-addon"] || {};
       const paths = emberAddon.paths || [];
       const addonPath = `../${name}`;
 
@@ -48,7 +51,7 @@ export default class Application extends AbstractFixture {
 
       return {
         config: {
-          'ember-addon': emberAddon
+          "ember-addon": emberAddon
         }
       };
     });
