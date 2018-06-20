@@ -1,65 +1,56 @@
-import { createBuilder } from 'broccoli-test-helper';
-import { join } from 'path';
+import { Tree } from 'broccoli-test-helper';
 
-// PRIVATE API ACCESS
-const EmberApp: any = require('ember-cli/lib/broccoli/ember-app');
-const _resetTreeCache: any = require('ember-cli/lib/models/addon')._resetTreeCache;
+export type FileMap = Map<string, string>;
 
-export interface Options { workingDir: string; }
+/**
+ * "Writes" a file to a fixture tree by converting directories in paths to
+ * TreeEntry objects.
+ */
+function writeFile(filename: string, contents: string, receiver: Tree): void {
+  const pathParts = filename.split('/');
+  const directories = pathParts.length > 1 ? pathParts.slice(0, -1) : [];
+  const file = pathParts.slice(-1)[0];
+
+  let current: Tree = receiver;
+  for (const part of directories) {
+    current[part] = current[part] || {} as Tree;
+    current = current[part] as Tree;
+  }
+
+  current[file] = contents;
+}
 
 export default class Builder {
-  public path: string;
+  public readonly files: FileMap = new Map();
 
-  public options: Options;
-
-  /**
-   * @private
-   */
-  public wrappedBuilder: any;
-
-  constructor(path: string, options?: Options) {
-    this.path = path;
-    this.options = Object.assign({
-      workingDir: 'application'
-    }, options);
-  }
-
-  get builder() {
-    if (this.wrappedBuilder) {
-      return this.wrappedBuilder;
+  public application(app: FileMap): this {
+    for (const [filename, contents] of app) {
+      this.files.set(filename, contents);
     }
 
-    const cwd = process.cwd();
-    process.chdir(join(this.path, this.options.workingDir));
+    return this;
+  }
 
-    try {
-      const emberApp = new EmberApp();
-      const wrappedBuilder = createBuilder(emberApp.toTree([]));
-      this.wrappedBuilder = wrappedBuilder;
-    } finally {
-      process.chdir(cwd);
+  public addon(addon: FileMap): this {
+    for (const [filename, contents] of addon) {
+      this.files.set(filename, contents);
     }
 
-    return this.wrappedBuilder;
+    return this;
   }
 
-  public build() {
-    try {
-      return this.builder.build();
-    } finally {
-      _resetTreeCache();
+  public file(name: string, contents: string): this {
+    this.files.set(name, contents);
+    return this;
+  }
+
+  public build(): Tree {
+    const result = {};
+
+    for (const [name, contents] of this.files) {
+      writeFile(name, contents, result);
     }
-  }
 
-  public changes() {
-    return this.builder.changes();
-  }
-
-  public dispose() {
-    return this.builder.dispose();
-  }
-
-  public read() {
-    return this.builder.read();
+    return result;
   }
 }
