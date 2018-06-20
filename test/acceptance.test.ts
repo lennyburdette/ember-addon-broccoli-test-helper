@@ -13,12 +13,12 @@ describe("my-addon", function() {
   let input: any;
   let output: any;
 
-  afterEach(() => {
+  afterEach(async () => {
     if (input) {
-      input.dispose();
+      await input.dispose();
     }
     if (output) {
-      output.dispose();
+      await output.dispose();
     }
 
     input = output = null;
