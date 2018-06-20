@@ -7,6 +7,10 @@ export default class AbstractFixture {
 
   public packageJSONObjects: object[] = [];
 
+  constructor(name: string) {
+    this.name = name;
+  }
+
   public file(name: string, contents: string) {
     this.files.set(name, contents);
     return this;

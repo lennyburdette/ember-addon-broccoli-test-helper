@@ -2,8 +2,7 @@ import AbstractFixture from "./abstract";
 
 export default class Application extends AbstractFixture {
   constructor(name = "application") {
-    super();
-    this.name = name;
+    super(name);
     this.applyDefaults();
   }
 

@@ -10,7 +10,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "declaration": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "strict": true
   },
   "include": [
     "test/**/*.ts",
@@ -22,5 +23,6 @@
   "exclude": [
     "node_modules",
     "dist"
-  ]
+  ],
+  "compileOnSave": true
 }

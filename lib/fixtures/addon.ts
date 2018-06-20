@@ -2,8 +2,7 @@ import AbstractFixture from "./abstract";
 
 export default class Addon extends AbstractFixture {
   constructor(name = "my-addon") {
-    super();
-    this.name = name;
+    super(name);
     this.applyDefaults();
   }
 
