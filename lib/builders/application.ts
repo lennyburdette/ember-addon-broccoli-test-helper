@@ -1,6 +1,6 @@
-import AbstractFixture from "./abstract";
+import AbstractBuilder from "./abstract";
 
-export default class Application extends AbstractFixture {
+export default class ApplicationBuilder extends AbstractBuilder {
   constructor(name = "application") {
     super(name);
     this.applyDefaults();

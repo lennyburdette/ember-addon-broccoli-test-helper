@@ -1,6 +1,6 @@
 import { defaultsDeep } from "lodash";
 
-export default class AbstractFixture {
+export default class AbstractBuilder {
   public name: string;
 
   public files: Map<string, string> = new Map();

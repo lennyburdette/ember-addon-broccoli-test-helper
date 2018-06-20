@@ -1,6 +1,6 @@
-import AbstractFixture from "./abstract";
+import AbstractBuilder from "./abstract";
 
-export default class Addon extends AbstractFixture {
+export default class AddonBuidler extends AbstractBuilder {
   constructor(name = "my-addon") {
     super(name);
     this.applyDefaults();

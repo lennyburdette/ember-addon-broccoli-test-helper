@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { resolve } from "path";
 import {
-  ApplicationFixture,
+  ApplicationBuilder,
   createBuilder,
   createTempDir,
   FixtureBuilder
@@ -25,7 +25,7 @@ describe("my-addon", function() {
   });
 
   it("builds everything", async () => {
-    const app = new ApplicationFixture()
+    const app = new ApplicationBuilder()
       .file("app/templates/application.hbs", "<h1>Hello World</h1>")
       .inRepoAddon("addon-under-test")
       .build();
