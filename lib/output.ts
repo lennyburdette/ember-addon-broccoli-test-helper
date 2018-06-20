@@ -8,10 +8,11 @@ const _resetTreeCache: any = require("ember-cli/lib/models/addon")._resetTreeCac
 export interface Options { workingDir: string; }
 
 export default class Output {
-  public path: string;
+  public readonly path: string;
 
-  public options: Options;
+  public readonly options: Options;
 
+  // lazily instantiated in builder()
   private wrappedBuilder!: _Output;
 
   constructor(path: string, options?: Options) {

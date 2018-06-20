@@ -7,11 +7,11 @@ type PackageJSONPart = object;
 type PackageJSONEditor = (object: PackageJSON) => PackageJSONPart;
 
 export default class AbstractBuilder {
-  public name: string;
+  public readonly name: string;
 
-  public files: FileMap = new Map();
+  public readonly files: FileMap = new Map();
 
-  public packageJSONParts: PackageJSONPart[] = [];
+  public readonly packageJSONParts: PackageJSONPart[] = [];
 
   constructor(name: string) {
     this.name = name;

@@ -12,7 +12,7 @@ export default class Input {
     return new Input(input);
   }
 
-  private wrappedInput: TempDir;
+  private readonly wrappedInput: TempDir;
 
   constructor(input: TempDir) {
     this.wrappedInput = input;

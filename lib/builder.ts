@@ -21,7 +21,7 @@ function writeFile(filename: string, contents: string, receiver: Tree): void {
 }
 
 export default class Builder {
-  public files: FileMap = new Map();
+  public readonly files: FileMap = new Map();
 
   public application(app: FileMap): this {
     for (const [filename, contents] of app) {
