@@ -13,7 +13,7 @@ function writeFile(filename: string, contents: string, receiver: Tree): void {
 
   let current: Tree = receiver;
   for (const part of directories) {
-    current[part] = current[part] || {} as Tree;
+    current[part] = current[part] || ({} as Tree);
     current = current[part] as Tree;
   }
 

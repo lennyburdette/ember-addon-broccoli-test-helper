@@ -1,36 +1,36 @@
-import AbstractBuilder from "./abstract";
+import AbstractBuilder from './abstract';
 
 export default class ApplicationBuilder extends AbstractBuilder {
-  constructor(name = "application") {
+  constructor(name = 'application') {
     super(name);
     this.applyDefaults();
   }
 
   public applyDefaults(): void {
-    this.file("app/styles/app.css", "");
+    this.file('app/styles/app.css', '');
     this.file(
-      "config/environment.js",
+      'config/environment.js',
       `module.exports = function() {
   return { modulePrefix: "${this.name}" };
 };
 `
     );
-    this.file("app/index.html", "");
-    this.file("ember-cli-build.js", "module.exports = {};");
+    this.file('app/index.html', '');
+    this.file('ember-cli-build.js', 'module.exports = {};');
 
     this.packageJSON({
-      "devDependencies": {
-        "ember-cli": "*",
-        "ember-cli-babel": "*",
-        "ember-cli-htmlbars": "*",
-        "ember-engines": "*",
-        "ember-source": "*",
-        "loader.js": "*"
+      devDependencies: {
+        'ember-cli': '*',
+        'ember-cli-babel': '*',
+        'ember-cli-htmlbars': '*',
+        'ember-engines': '*',
+        'ember-source': '*',
+        'loader.js': '*'
       },
-      "ember-addon": {
+      'ember-addon': {
         paths: []
       },
-      "name": this.name
+      name: this.name
     });
   }
 
@@ -42,7 +42,7 @@ export default class ApplicationBuilder extends AbstractBuilder {
    */
   public inRepoAddon(name: string): this {
     this.packageJSON((rendered: any) => {
-      const emberAddon = rendered["ember-addon"] || {};
+      const emberAddon = rendered['ember-addon'] || {};
       const paths = emberAddon.paths || [];
       const addonPath = `../${name}`;
 
@@ -50,7 +50,7 @@ export default class ApplicationBuilder extends AbstractBuilder {
 
       return {
         config: {
-          "ember-addon": emberAddon
+          'ember-addon': emberAddon
         }
       };
     });

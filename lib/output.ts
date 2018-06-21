@@ -1,11 +1,19 @@
-import { Changes, createBuilder, Output as _Output, Tree } from "broccoli-test-helper";
-import { join } from "path";
+import {
+  Changes,
+  createBuilder,
+  Output as _Output,
+  Tree
+} from 'broccoli-test-helper';
+import { join } from 'path';
 
 // PRIVATE API ACCESS
-const EmberApp: any = require("ember-cli/lib/broccoli/ember-app");
-const _resetTreeCache: any = require("ember-cli/lib/models/addon")._resetTreeCache;
+const EmberApp: any = require('ember-cli/lib/broccoli/ember-app');
+const _resetTreeCache: any = require('ember-cli/lib/models/addon')
+  ._resetTreeCache;
 
-export interface Options { workingDir: string; }
+export interface Options {
+  workingDir: string;
+}
 
 export default class Output {
   public readonly path: string;
