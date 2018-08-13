@@ -21,7 +21,7 @@
     "test:debug": "tsc && mocha debug dist/test/"
   },
   "dependencies": {
-    "broccoli-test-helper": "^1.2.0",
+    "broccoli-test-helper": "^1.4.0",
     "ember-cli-babel": "^6.6.0",
     "lodash": "^4.17.10"
   },
