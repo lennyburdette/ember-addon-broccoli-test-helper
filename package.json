@@ -23,7 +23,7 @@
   "dependencies": {
     "broccoli-test-helper": "^1.2.0",
     "ember-cli-babel": "^6.6.0",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "@types/chai": "^4.1.3",
